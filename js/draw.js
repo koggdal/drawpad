@@ -57,6 +57,13 @@
 			// Get the drawing context
 			this.context = this.canvas.getContext( '2d' );
 			
+			// Set the drawing canvas (a separate canvas that gets cleaned after each line)
+			this.canvasDraw = document.createElement( 'canvas' );
+			this.contextDraw = this.canvasDraw.getContext( '2d' );
+			this.canvas.insertBefore( this.canvasDraw );
+			this.canvasDraw.width = this.canvas.width;
+			this.canvasDraw.height = this.canvas.height;
+			
 			// Set the canvas size to the size set in settings
 			// Using a timer because iOS Safari doesnt load innerWidth/innerHeight (default size) correctly directly on load
 			setTimeout( function() {
@@ -141,14 +148,7 @@
 				
 			} else {
 			
-				
-				var img = new Image(),
-					_this = this;
-				img.onload = function(){
-					_this.context.drawImage( img, _this.pointers[id].last.x-200, _this.pointers[id].last.y-200 );
-				};
-				img.src = "images/spectrum.png";
-			
+				/*
 				// Loop through all the touch events (or one iteration for mouse down)
 				for(var x = 0; x < (e.touches ? e.touches.length : 1); x++){
 					this.context.beginPath();
@@ -158,7 +158,7 @@
 					this.context.arc(this.pointers[id].last.x,this.pointers[id].last.y,this.settings.lineWidth/2,0,Math.PI*2,false);
 					this.context.fill();
 					this.context.closePath();
-				}
+				}*/
 			}
 		},
 		
@@ -205,13 +205,11 @@
 					
 					// Draw several times to fill in gaps between event triggerings
 					for(var n = 0; n < steps; n++){
-						this.context.beginPath();
-						this.context.globalAlpha = this.settings.opacity;
-						this.context.strokeStyle = this.settings.strokeStyle;
-						this.context.fillStyle = this.settings.fillStyle;
-						this.context.arc(x,y,this.settings.lineWidth/2,0,Math.PI*2,false);
-						this.context.fill();
-						this.context.closePath();
+						this.contextDraw.beginPath();
+						this.contextDraw.fillStyle = this.settings.fillStyle;
+						this.contextDraw.arc(x,y,this.settings.lineWidth/2,0,Math.PI*2,false);
+						this.contextDraw.fill();
+						this.contextDraw.closePath();
 						
 						// Increment the x and y position for the next iteration
 						x += dist.x;
