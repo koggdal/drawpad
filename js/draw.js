@@ -141,6 +141,14 @@
 				
 			} else {
 			
+				
+				var img = new Image(),
+					_this = this;
+				img.onload = function(){
+					_this.context.drawImage( img, _this.pointers[id].last.x-200, _this.pointers[id].last.y-200 );
+				};
+				img.src = "images/spectrum.png";
+			
 				// Loop through all the touch events (or one iteration for mouse down)
 				for(var x = 0; x < (e.touches ? e.touches.length : 1); x++){
 					this.context.beginPath();
