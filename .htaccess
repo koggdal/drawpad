@@ -1,0 +1,12 @@
+RewriteEngine On
+
+RewriteRule ^code(|/)$ code.php
+
+RewriteRule ^login/$ loginprocess.php
+RewriteRule ^logout/$ logoutprocess.php
+RewriteRule ^register/$ registration.php
+RewriteRule ^cloud-save/$ saveimage.php
+RewriteRule ^cloud-delete/$ deleteimage.php
+
+RewriteCond %{QUERY_STRING} ^user_id=(\d+)$
+RewriteRule ^cloud-images/$ getimages.php?user_id=%1
