@@ -179,17 +179,15 @@
 		</div>
 	</footer>
 	
-	<script src="js/combined-min-1293066367.js"></script>
 <?php
 /*
- *	Original JavaScript files before combining and minifying
- *
+	<script src="js/combined-min-1293066367.js"></script>
+*/
+?>
 	<script src="js/apphelp.js"></script>
 	<script src="js/apphelp.slider.js"></script>
 	<script src="js/apphelp.colorpicker.js"></script>
 	<script src="js/draw.js"></script>
 	<script src="js/app.js"></script>
-*/
-?>
 </body>
 </html>
