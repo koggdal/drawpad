@@ -345,6 +345,10 @@ input[type=email] {
 	display: none;
 }
 
+#stage {
+	position: absolute;
+}
+
 #app_header {
 	position: absolute;
 	z-index: 10;
@@ -586,7 +590,7 @@ input[type=email] {
 	   -moz-border-radius: 50px;
 	        border-radius: 50px;
 	background: #fff;
-	border: 1px solid #bbb;
+	border: 1px solid transparent;
 	margin: 0 auto;
 	display: none;
 }

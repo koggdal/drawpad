@@ -306,6 +306,8 @@
 				change: function( newOpacity ) {
 					draw.setBrushOpacity( newOpacity );
 					brushSizeFeedback.get(0).style.background = draw.settings.fillStyle;
+					brushSizeFeedback.get(0).style.WebkitBackgroundClip = 'padding-box';
+					brushSizeFeedback.get(0).style.opacity = draw.settings.opacity;
 				},
 				end: function(){
 					brushSizeFeedback.hide();
@@ -737,7 +739,7 @@
 		tmpCanvas.height = 88;
 		
 		// Create the thumbnail
-		tmpContext.drawImage( draw.canvas, offset_x, offset_y, size, size, 0, 0, 88, 88 );
+		tmpContext.drawImage( draw.canvasImage, offset_x, offset_y, size, size, 0, 0, 88, 88 );
 		
 		if( format == "data_url" )
 			return tmpCanvas.toDataURL();
@@ -755,7 +757,7 @@
 		}
 		
 		// Save to local storage
-		window.localStorage.setItem( 'image_' + id, draw.canvas.toDataURL() );
+		window.localStorage.setItem( 'image_' + id, draw.canvasImage.toDataURL() );
 		window.localStorage.setItem( 'thumb_' + id, createThumbnail( 'data_url' ) );
 		
 		
@@ -785,7 +787,7 @@
 	
 		$.ajax({
 			url: '../cloud-save/',
-			data: 'user_id='+user_id+'&fullsize='+draw.canvas.toDataURL()+'&thumb='+createThumbnail( 'data_url' ),
+			data: 'user_id='+user_id+'&fullsize='+draw.canvasImage.toDataURL()+'&thumb='+createThumbnail( 'data_url' ),
 			type: 'POST',
 			success: function( response ){
 				var data = JSON.parse( response );
