@@ -741,6 +741,7 @@
 
 
 
+
 /*!
  * ColorPicker v1.0
  * appHelp Plugin
@@ -1001,7 +1002,7 @@
 			hideToolbars: function(){},
 			showToolbars: function(){},
 			toolbars_visible: false,
-			historyLimit: 3,
+			historyLimit: 10,
 			
 			background: "#ffffff",
 			density: 0.66,
@@ -1033,11 +1034,16 @@
 			// Update the settings object with new values
 			$.extend( this.settings, options );
 			
-			// Get the canvas
+			// Get the canvas used for drawing
 			this.canvas = this.settings.canvas;
 			
-			// Get the drawing context
+			// Get the drawing context used for drawing
 			this.context = this.canvas.getContext( '2d' );
+			
+			// Set the image canvas
+			this.canvasImage = document.createElement( 'canvas' );
+			this.contextImage = this.canvasImage.getContext( '2d' );
+			this.canvas.parentNode.insertBefore( this.canvasImage, this.canvas.nextElementSibling );
 			
 			// Set the canvas size to the size set in settings
 			// Using a timer because iOS Safari doesnt load innerWidth/innerHeight (default size) correctly directly on load
@@ -1063,23 +1069,11 @@
 		initDraw: function(){
 			this.canvas.width = this.settings.width;
 			this.canvas.height = this.settings.height;
+			this.canvasImage.width = this.settings.width;
+			this.canvasImage.height = this.settings.height;
 			
 			this.clear();
 			this.reset();
-			
-			/*
-			var num = 5;
-			var opacity = 0.1;
-			
-			for(var i = 0; i < num; i++){
-				this.context.beginPath();
-				this.context.globalAlpha = 1;
-				this.context.strokeStyle = this.settings.strokeStyle;
-				this.context.fillStyle = "rgba(0,0,0,"+(Math.round(Math.sqrt(opacity)*10)/10)+")";
-				this.context.arc(100,100,50,0,Math.PI*2,false);
-				this.context.fill();
-				this.context.closePath();
-			}*/
 		},
 		
 		// Function that starts the drawing process
@@ -1123,11 +1117,11 @@
 				
 			} else {
 			
+				this.canvas.style.opacity = this.settings.opacity;
+			
 				// Loop through all the touch events (or one iteration for mouse down)
 				for(var x = 0; x < (e.touches ? e.touches.length : 1); x++){
 					this.context.beginPath();
-					this.context.globalAlpha = this.settings.opacity;
-					this.context.strokeStyle = this.settings.strokeStyle;
 					this.context.fillStyle = this.settings.fillStyle;
 					this.context.arc(this.pointers[id].last.x,this.pointers[id].last.y,this.settings.lineWidth/2,0,Math.PI*2,false);
 					this.context.fill();
@@ -1180,8 +1174,6 @@
 					// Draw several times to fill in gaps between event triggerings
 					for(var n = 0; n < steps; n++){
 						this.context.beginPath();
-						this.context.globalAlpha = this.settings.opacity;
-						this.context.strokeStyle = this.settings.strokeStyle;
 						this.context.fillStyle = this.settings.fillStyle;
 						this.context.arc(x,y,this.settings.lineWidth/2,0,Math.PI*2,false);
 						this.context.fill();
@@ -1244,6 +1236,15 @@
 				if(ids.indexOf(id) == -1)
 					this.pointers[id].enabled = false;
 			}
+				
+			// Move the drawn image to the primary canvas
+			this.contextImage.globalAlpha = this.settings.opacity;
+			this.contextImage.drawImage( this.canvas, 0, 0 );
+			this.contextImage.globalAlpha = '1';
+			
+			// Clear the secondary canvas
+			this.context.clearRect( 0, 0, this.canvas.width, this.canvas.height );
+			this.canvas.style.opacity = '0';
 			
 			// Clear history states after the current position
 			if( this.historyPos < this.history.length-1 ) {
@@ -1257,7 +1258,7 @@
 			}
 			
 			// Add to history
-			this.history.push( this.context.getImageData( 0, 0, this.canvas.width, this.canvas.height ) );
+			this.history.push( this.contextImage.getImageData( 0, 0, this.canvasImage.width, this.canvasImage.height ) );
 			this.historyPos = this.history.length-1;
 			
 			// Trigger change callback
@@ -1267,17 +1268,17 @@
 		// Function to go back in history state
 		undo: function() {
 			// Clear the canvas
-			this.context.clearRect( 0, 0, this.canvas.width, this.canvas.height );
+			this.contextImage.clearRect( 0, 0, this.canvasImage.width, this.canvasImage.height );
 			// Add the image data from the previous state
-			this.context.putImageData( this.history[ --this.historyPos ], 0, 0 );
+			this.contextImage.putImageData( this.history[ --this.historyPos ], 0, 0 );
 		},
 		
 		// Function to go forward in the history states
 		redo: function() {
 			// Clear the canvas
-			this.context.clearRect( 0, 0, this.canvas.width, this.canvas.height );
+			this.contextImage.clearRect( 0, 0, this.canvasImage.width, this.canvasImage.height );
 			// Add the image data from the previous state
-			this.context.putImageData( this.history[ ++this.historyPos ], 0, 0 );
+			this.contextImage.putImageData( this.history[ ++this.historyPos ], 0, 0 );
 		},
 		
 		// Function to reset the drawing process
@@ -1286,7 +1287,7 @@
 			this.historyPos = 0;
 			
 			// Save first state to history
-			this.history.push( this.context.getImageData( 0, 0, this.canvas.width, this.canvas.height ) );
+			this.history.push( this.contextImage.getImageData( 0, 0, this.canvasImage.width, this.canvasImage.height ) );
 			
 			// Update settings
 			this.settings.change();
@@ -1296,11 +1297,11 @@
 		clear: function(){
 		
 			// Clear canvas
-			this.context.fillStyle = this.settings.background;
-			this.context.fillRect( 0, 0, this.settings.width, this.settings.height );
+			this.contextImage.fillStyle = this.settings.background;
+			this.contextImage.fillRect( 0, 0, this.settings.width, this.settings.height );
 			
 			// Save state to history
-			this.history.push( this.context.getImageData( 0, 0, this.canvas.width, this.canvas.height ) );
+			this.history.push( this.contextImage.getImageData( 0, 0, this.canvasImage.width, this.canvasImage.height ) );
 			
 			// Update settings
 			this.settings.change();
@@ -1315,7 +1316,7 @@
 			img.onload = function(){
 			
 				// Draw the image content onto the canvas
-				_this.context.drawImage( img, x, y );
+				_this.contextImage.drawImage( img, x, y );
 				
 				if( reset ) {
 					// Reset the history
@@ -1323,7 +1324,7 @@
 				} else {
 				
 					// Save state to history
-					_this.history.push( _this.context.getImageData( 0, 0, _this.canvas.width, _this.canvas.height ) );
+					_this.history.push( _this.contextImage.getImageData( 0, 0, _this.canvasImage.width, _this.canvasImage.height ) );
 				
 					// Update settings
 					_this.settings.change();
@@ -1441,16 +1442,8 @@
 		
 		// Function to set the brush opacity
 		setBrushOpacity: function( newOpacity ) {
-			var fill = this.settings.fillStyle,
-				color_matches = /rgba\((\d+),(\d+),(\d+),.*?\)/.exec(fill),
-				red = parseInt(color_matches[1]),
-				green = parseInt(color_matches[2]),
-				blue = parseInt(color_matches[3]),
-				
-				opacity = (newOpacity/100) * (1/this.settings.lineWidth);
 			
-			this.settings.fillStyle = "rgba("+red+","+green+","+blue+","+opacity+")";
-			this.settings.alpha = newOpacity;
+			this.settings.opacity = newOpacity/100;
 		},
 		
 		// Function to set the brush color. Accepts hex, rgb and rgba values
@@ -1461,7 +1454,6 @@
 				newColor = this.convertColorFormat( newColor, 'rgb', 'rgba' );
 				
 			this.settings.fillStyle = newColor;
-			this.setBrushOpacity( this.settings.alpha );
 		},
 		
 		// Function to set a new brush size
@@ -1793,6 +1785,8 @@
 				change: function( newOpacity ) {
 					draw.setBrushOpacity( newOpacity );
 					brushSizeFeedback.get(0).style.background = draw.settings.fillStyle;
+					brushSizeFeedback.get(0).style.WebkitBackgroundClip = 'padding-box';
+					brushSizeFeedback.get(0).style.opacity = draw.settings.opacity;
 				},
 				end: function(){
 					brushSizeFeedback.hide();
@@ -2224,7 +2218,7 @@
 		tmpCanvas.height = 88;
 		
 		// Create the thumbnail
-		tmpContext.drawImage( draw.canvas, offset_x, offset_y, size, size, 0, 0, 88, 88 );
+		tmpContext.drawImage( draw.canvasImage, offset_x, offset_y, size, size, 0, 0, 88, 88 );
 		
 		if( format == "data_url" )
 			return tmpCanvas.toDataURL();
@@ -2242,7 +2236,7 @@
 		}
 		
 		// Save to local storage
-		window.localStorage.setItem( 'image_' + id, draw.canvas.toDataURL() );
+		window.localStorage.setItem( 'image_' + id, draw.canvasImage.toDataURL() );
 		window.localStorage.setItem( 'thumb_' + id, createThumbnail( 'data_url' ) );
 		
 		
@@ -2272,7 +2266,7 @@
 	
 		$.ajax({
 			url: '../cloud-save/',
-			data: 'user_id='+user_id+'&fullsize='+draw.canvas.toDataURL()+'&thumb='+createThumbnail( 'data_url' ),
+			data: 'user_id='+user_id+'&fullsize='+draw.canvasImage.toDataURL()+'&thumb='+createThumbnail( 'data_url' ),
 			type: 'POST',
 			success: function( response ){
 				var data = JSON.parse( response );

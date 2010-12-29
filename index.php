@@ -1,15 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html manifest="cache.manifest">
 <head>
 	<meta charset="UTF-8" />
 	<title>DrawApp</title>
 	<base href="http://localhost/drawapp/" />
+	<script>
+		// Check for updates to the offline cache
+		window.applicationCache.addEventListener('updateready',function(){
+			// Reload to use the updated cache
+			window.location = window.location;
+		},false);
+	</script>
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/style.min.1293642465.css" />
 	
-	<script src="js/browsercheck-1293067116.js"></script>
+	<script src="js/production/browsercheck.min.1293642061.js"></script>
 </head>
 <body id="mode_home">
 	<div id="preload">
@@ -179,15 +186,15 @@
 		</div>
 	</footer>
 	
+	<script src="js/production/app-combined.min.1293642316.js"></script>
 <?php
 /*
-	<script src="js/combined-min-1293066367.js"></script>
-*/
-?>
 	<script src="js/apphelp.js"></script>
 	<script src="js/apphelp.slider.js"></script>
 	<script src="js/apphelp.colorpicker.js"></script>
 	<script src="js/draw.js"></script>
 	<script src="js/app.js"></script>
+*/
+?>
 </body>
 </html>
