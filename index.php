@@ -186,7 +186,7 @@
 		</div>
 	</footer>
 	
-	<script src="js/production/app-combined.min.1293642316.js"></script>
+	<script src="js/production/app-combined.min.1293671028.js"></script>
 <?php
 /*
 	<script src="js/apphelp.js"></script>

@@ -564,8 +564,8 @@
 			xhr.onreadystatechange = function() {
 				if( this.readyState == 4 && this.status == 200 )
 					settings.success( this.responseText );
-				else
-					settings.failure( this.status, this.readyState );
+				else if( this.readyState == 4 && this.status != 200 )
+					settings.failure( this.status );
 			};
 		}
 	};

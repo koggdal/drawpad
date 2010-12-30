@@ -1,5 +1,8 @@
 CACHE MANIFEST
 # rev 1
+
+
+CACHE:
 css/style.min.1293642465.css
 images/colorspace.png
 images/delete.png
@@ -9,3 +12,22 @@ images/spectrum-handle.png
 images/spectrum.png
 js/production/browsercheck.min.1293642061.js
 js/production/app-combined.min.1293642316.js
+
+# For testing purposes
+#css/style.css
+#js/browsercheck.js
+#js/apphelp.js
+#js/apphelp.slider.js
+#js/apphelp.colorpicker.js
+#js/draw.js
+#js/app.js
+
+
+
+NETWORK:
+login/
+logout/
+register/
+cloud-save/
+cloud-delete/
+cloud-images/
