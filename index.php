@@ -14,9 +14,9 @@
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<link rel="stylesheet" href="css/style.min.1293642465.css" />
+	<link rel="stylesheet" href="css/style.css" />
 	
-	<script src="js/production/browsercheck.min.1293642061.js"></script>
+	<script src="js/production/browsercheck.js"></script>
 </head>
 <body id="mode_home">
 	<div id="preload">
@@ -185,16 +185,16 @@
 			</div>
 		</div>
 	</footer>
-	
-	<script src="js/production/app-combined.min.1293671028.js"></script>
+
 <?php
-/*
+/*	
+	<script src="js/production/app-combined.min.1293671028.js"></script>
+*/
+?>
 	<script src="js/apphelp.js"></script>
 	<script src="js/apphelp.slider.js"></script>
 	<script src="js/apphelp.colorpicker.js"></script>
 	<script src="js/draw.js"></script>
 	<script src="js/app.js"></script>
-*/
-?>
 </body>
 </html>
