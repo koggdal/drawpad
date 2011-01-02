@@ -2,8 +2,8 @@
 <html manifest="cache.manifest">
 <head>
 	<meta charset="UTF-8" />
-	<title>DrawApp</title>
-	<base href="http://localhost/drawapp/" />
+	<title>DrawPad</title>
+	<base href="http://localhost/drawpad/" />
 	<script>
 		// Check for updates to the offline cache
 		window.applicationCache.addEventListener('updateready',function(){
@@ -14,6 +14,9 @@
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link rel="apple-touch-icon-precomposed" href="images/icon_57.png" />
+	<link rel="apple-touch-icon-precomposed" href="images/icon_72.png" sizes="72x72" />
+	<link rel="apple-touch-icon-precomposed" href="images/icon_114.png" sizes="114x114" />
 	<link rel="stylesheet" href="css/style.css" />
 	
 	<script src="js/production/browsercheck.js"></script>
@@ -30,7 +33,7 @@
 		<div class="toolbar_wrapper">
 			<div id="header_home">
 				<button type="button" class="edit hidden">Edit</button>
-				<h1>DrawApp</h1>
+				<h1>DrawPad</h1>
 				<button type="button" class="login">Log in</button>
 			</div>
 			

@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# rev 1
+# rev 2
 
 
 CACHE:
@@ -10,6 +10,9 @@ images/icons.png
 images/slider_icons.png
 images/spectrum-handle.png
 images/spectrum.png
+images/appicon_57.png
+images/appicon_72.png
+images/appicon_114.png
 #js/production/browsercheck.min.1293642061.js
 #js/production/app-combined.min.1293642316.js
 
