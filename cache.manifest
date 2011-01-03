@@ -1,9 +1,9 @@
 CACHE MANIFEST
-# rev 2
+# rev 3
 
 
 CACHE:
-#css/style.min.1293642465.css
+css/style.min.1293642465.css
 images/colorspace.png
 images/delete.png
 images/icons.png
@@ -13,17 +13,17 @@ images/spectrum.png
 images/appicon_57.png
 images/appicon_72.png
 images/appicon_114.png
-#js/production/browsercheck.min.1293642061.js
-#js/production/app-combined.min.1293642316.js
+js/production/browsercheck.min.1293642061.js
+js/production/app-combined.min.1294012932.js
 
 # For testing purposes
-css/style.css
-js/browsercheck.js
-js/apphelp.js
-js/apphelp.slider.js
-js/apphelp.colorpicker.js
-js/draw.js
-js/app.js
+#css/style.css
+#js/browsercheck.js
+#js/apphelp.js
+#js/apphelp.slider.js
+#js/apphelp.colorpicker.js
+#js/draw.js
+#js/app.js
 
 
 

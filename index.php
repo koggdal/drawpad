@@ -17,9 +17,9 @@
 	<link rel="apple-touch-icon-precomposed" href="images/icon_57.png" />
 	<link rel="apple-touch-icon-precomposed" href="images/icon_72.png" sizes="72x72" />
 	<link rel="apple-touch-icon-precomposed" href="images/icon_114.png" sizes="114x114" />
-	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/style.min.1294013044.css" />
 	
-	<script src="js/production/browsercheck.js"></script>
+	<script src="js/production/browsercheck.min.1293642061.js"></script>
 </head>
 <body id="mode_home">
 	<div id="preload">
@@ -189,15 +189,16 @@
 		</div>
 	</footer>
 
+
+	<script src="js/production/app-combined.min.1294012932.js"></script>
 <?php
-/*	
-	<script src="js/production/app-combined.min.1293671028.js"></script>
-*/
-?>
+/*
 	<script src="js/apphelp.js"></script>
 	<script src="js/apphelp.slider.js"></script>
 	<script src="js/apphelp.colorpicker.js"></script>
 	<script src="js/draw.js"></script>
 	<script src="js/app.js"></script>
+*/
+?>
 </body>
 </html>

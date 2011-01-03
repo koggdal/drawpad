@@ -586,7 +586,6 @@
 
 
 
-
 /*!
  * Slider v1.0
  * appHelp Plugin
@@ -736,8 +735,6 @@
 	};
 	
 })( window, window.document, appHelp );
-
-
 
 
 
@@ -980,7 +977,6 @@
 
 
 
-
 /*!
  * Draw v1.0
  * http://draw.koggdal.com/
@@ -1167,9 +1163,10 @@
 						steps, step;
 					dist.d = Math.sqrt(dist.x*dist.x + dist.y*dist.y);
 					steps = dist.d*this.settings.density;
-					step = 1 / steps;
-					dist.x *= step;
-					dist.y *= step;
+					step = {
+						x: dist.x * ( 1 / steps ),
+						y: dist.y * ( 1 / steps )
+					};
 					
 					// Draw several times to fill in gaps between event triggerings
 					for(var n = 0; n < steps; n++){
@@ -1180,8 +1177,8 @@
 						this.context.closePath();
 						
 						// Increment the x and y position for the next iteration
-						x += dist.x;
-						y += dist.y;
+						x += step.x;
+						y += step.y;
 					}
 					
 					// Set the last drawn position of the current pointer
@@ -1472,7 +1469,6 @@
 	window.Draw = Draw;
 	
 })( window, window.document, appHelp );
-
 
 
 
