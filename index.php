@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>DrawPad</title>
-	<base href="http://localhost/drawpad/" />
+	<base href="http://app.drawpad.net/" />
 	<script>
 		// Check for updates to the offline cache
 		window.applicationCache.addEventListener('updateready',function(){
@@ -191,14 +191,5 @@
 
 
 	<script src="js/production/app-combined.min.1294012932.js"></script>
-<?php
-/*
-	<script src="js/apphelp.js"></script>
-	<script src="js/apphelp.slider.js"></script>
-	<script src="js/apphelp.colorpicker.js"></script>
-	<script src="js/draw.js"></script>
-	<script src="js/app.js"></script>
-*/
-?>
 </body>
 </html>
